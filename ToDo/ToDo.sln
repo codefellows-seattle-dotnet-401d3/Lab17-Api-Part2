@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo", "ToDo\ToDo.csproj", "{D24DFCB2-E5A0-4F46-B0FE-712601E4737A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoubleResource", "ToDo\DoubleResource.csproj", "{D24DFCB2-E5A0-4F46-B0FE-712601E4737A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

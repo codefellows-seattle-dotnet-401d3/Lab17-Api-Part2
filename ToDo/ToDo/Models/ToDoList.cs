@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ToDo.Models
+namespace DoubleResource.Models
 {
     public class ToDoList
     {
         public int Id { get; set; }
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         //Links back to the models.todo
-        public ToDo ToDo { get; set; }
+        public List<ToDo> ToDo { get; set; }
     }
 }
