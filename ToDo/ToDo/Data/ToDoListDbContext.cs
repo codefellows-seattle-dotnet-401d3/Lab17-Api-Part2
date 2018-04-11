@@ -9,16 +9,19 @@ namespace DoubleResource.Data
 {
     public class ToDoListDbContext : DbContext
     {
-        public ToDoListDbContext(DbContextOptions<ToDoListDbContext> options) :base(options)
+        public ToDoListDbContext(DbContextOptions<ToDoListDbContext> options) : base(options)
         {
 
         }
 
         //Links back to the to do list
-        public DbSet<ToDoList> ToDoLists { get; set; }
+       // public DbSet<ToDoList> ToDoLists { get; set; } -> might not need this.s
+        public DbSet<ToDo> ToDos {get;set;}
+
+
 
         //Links back to the Todo list
-        public DbSet<ToDoList> ToDos { get; set;}
+        public DbSet<ToDoList> ToDoLists { get; set;}
 
 
     }
