@@ -31,7 +31,7 @@ namespace DoubleResource.Controllers
 
 
         [HttpGet("{id}", Name = "Get")]
-        public async Task<IActionResult> GetSong([FromRoute] int id)
+        public async Task<IActionResult> Gettask([FromRoute] int id)
         {
             var item = await _context.ToDos.FirstOrDefaultAsync(s => s.Id == id);
 
@@ -42,8 +42,31 @@ namespace DoubleResource.Controllers
 
             return Ok(item);
         }
+        [HttpPost]
+        public IActionResult Create([FromBody] ToDo item)
+        {
+            if (item == null)
+            {
+                return BadRequest();
+            }
 
+            _context.ToDos.Add(item);
+            _context.SaveChanges();
 
+            return CreatedAtRoute("GetTodo", new { id = item.Id }, item);
+        }
+
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody]string value)
+        {
+
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+
+        }
 
 
 
