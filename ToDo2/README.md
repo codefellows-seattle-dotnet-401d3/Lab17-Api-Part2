@@ -24,3 +24,4 @@ Using C#, .Net Core and Postman, this project gets, posts, pushes and deletes da
 
 01-01-2001 4:59pm - Added functionality to add and delete some things. -->
 04-11-2018 8:31pm - Project written out per class video.  Unit tests need to be added.
+04-11-2018 9:30pm - Unit test environment set up, awaiting details of how to actually write them.
