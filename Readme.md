@@ -1,75 +1,123 @@
-![cf](http://i.imgur.com/7v5ASc8.png) Lab 17: API - Double Resources
-=====================================
+# Lab17 Todo_Api
 
-## To Submit this Assignment
-- fork this repository
-- write all of your code in a directory named `lab-#`; + `<your name>` **e.g.** `lab17-amanda`
-- push to your repository
-- submit a pull request to this repository
-- submit a link to your PR in canvas
+## Todo List Api
+This is a ToDo list api that contains both tasks and assigned
+days. Below you can find examples of API calls for both the
+todo items and the weekday.
 
-## Directions
+## Tools Used
+Microsoft Visual Studio Community Version 15.5.7
 
-Starting from an **empty MVC template**, Create an API that allows a user to Create individual ToDo tasks, and put them in a ToDoList. <br /><br/>
+C#
 
-Don't forget to enable MVC and setup your Dependency Injection and DbContext for your database. (to encourage muscle memory, please try and do as much as you can before referring to external resources)
+ASP.Net Core
 
+Postman
 
-### Application Components
-You application should contiain the following *at minimum*:
-1. 2 Controllers with CRUD endpoints (You may use an empty API controller template for this if you wish)
-1. 2 Models (ToDo and ToDoList)
-1. 2 database tables (one database table for each model)
+## Getting Started
 
-We can make the assumption that a ToDo can **only be a part of one ToDoList**
+Clone this repository to your local machine.
+```
+$ git clone 
+```
+Once downloaded, cd into the ```Lab17-Api-Part2``` directory.
+```
+$ cd Lab17-Api-Part2
+```
+The cd into ```Lab17-Api-Part2``` directory.
+```
+$ cd Lab17-Api-Part2
+```
+The cd into the second ```Todo_Api``` directory.
+```
+$ cd Todo_Api
+```
+Then run .NET build.
+```
+$ dotnet build
+```
+Once that is complete, run the program.
+```
+$ dotnet run
+```
 
-The following actions must also be true:
+## API Calls
 
-1. when accessing the Get action on `\api\ToDo`, it should output all the individual ToDos
-1. when accessing the Get action on `\api\ToDo\{id}`, it should output the details of the individual tToDo AND the ToDoList it is a part of.
-1. when accessing the Get action on `\api\ToDoList`, it should output all the ToDoLists
-1. when accessing the Get action on `\api\ToDoList\{id}`, it should output the individual ToDo list AND the individual tasks associated with it
-1. If you choose to delete a ToDoList, it should delete the list AND all of the associated ToDos associated
+### Get
 
-Unit tests are required for this lab.
+To get all todo items:
 
-## ReadMe
-A README is a module consumer's first -- and maybe only -- look into your creation. The consumer wants a module to fulfill their need, so you must explain exactly what need your module fills, and how effectively it does so.
-<br />
-Your job is to
+```http://localhost:XXXXX/api/todo```
 
-1. tell them what it is (with context)
-2. show them what it looks like in action
-3. show them how they use it
-4. tell them any other relevant details
-<br />
+To get todo item by ID:
 
-This is ***your*** job. It's up to the module creator to prove that their work is a shining gem in the sea of slipshod modules. Since so many developers' eyes will find their way to your README before anything else, quality here is your public-facing measure of your work.
+```http://localhost:XXXXX/api/todo/X```
 
-<br /> <br /> Refer to the sample-README in the class repo for an example. 
-- [Reference](https://github.com/noffle/art-of-readme)
+To get all WeekDay items:
 
-## Rubric
-- 7pts: Program meets all requirements described in Lab directions
+```http://localhost:XXXXX/api/weekday```
 
-	Points  | Reasoning | 
-	 ------------ | :-----------: | 
-	7       | Program runs as expected, no exceptions during execution |
-	5       | Program meets all of the  functionality requirements described above // Program runs/compiles, Program contains logic/process errors|
-	4       | Program meets most of the functionality requirements descibed above // Program runs/compiles, but throws exceptions during execution |
-	3       | Program missing most of the functionality requirements descibed above // Program runs/compiles |
-	2       | Missing tests // tests are not passing // not enough valid tests |
-	2       | Missing Readme Document // Readme Document does not meet standards |
-	0       | Program does not compile/run. Build Errors // Required naming conventions not met |
-	0       | No Submission |
+To get WeekDay item by ID:
 
-- 3pts: Code meets industry standards
-	- These points are only awardable if you score at minimum a 5/7 on above criteria
+```http://localhost:XXXXX/api/weekday/X```
 
-	Points  | Reasoning | 
-	 ------------ | :-----------: | 
-	3       | Code meets Industry Standards // methods and variables namings are appropriate // Selective and iterative statements are used appropriately, Fundamentals are propertly executed // Clearly and cleanly commented |
-	2       | syntax for naming conventions are not correct (camelCasing and PascalCasing are used appropriately) // slight errors in use of fundamentals // Missing some comments |
-	1       | Inappropriate naming conventions, and/or inappropriate use of fundamentals // Code is not commented  |
-	0       | No Submission or incomplete submission |
+## Add
+Create a new todo item:
 
+```http://localhost:XXXXX/api/todo```
+
+JSON example:
+
+```
+    {
+        "name": "Take down christmas decorations",
+        "isComplete": true
+    }
+```
+
+Create a new WeekDay:
+
+```http://localhost:XXXXX/api/weekday```
+
+JSON example:
+
+```
+    {
+        "day": "Monday",
+    }
+```
+
+## Edit
+Update existing item:
+
+```http://localhost:XXXXX/api/todo/X```
+
+JSON Example:
+```
+{
+    "id": X,
+    "name": "Take down christmas decorations",
+    "isComplete": false
+}
+```
+
+Update existing weekday item:
+
+```http://localhost:XXXXX/api/weekday/X```
+
+JSON Example:
+```
+{
+    "id": X,
+    "day": "Monday",
+}
+```
+
+## Delete
+Delete an item:
+
+```http://localhost:XXXXX/api/todo/X```
+
+Delete a weekday:
+
+```http://localhost:XXXXX/api/weekday/X```
