@@ -8,6 +8,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TodoAPI.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+
 
 namespace TodoAPI
 {
@@ -24,6 +28,10 @@ namespace TodoAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+
+            services.AddDbContext<ToDoDbContext>(options => options.UseSqlServer(
+                Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +43,12 @@ namespace TodoAPI
             }
 
             app.UseMvc();
+
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("TO List");
+                });
+
         }
     }
 }
