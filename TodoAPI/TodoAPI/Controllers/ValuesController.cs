@@ -9,13 +9,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace TodoAPI.Controllers
+    /* Use postman to test routes with Get and Put Methods
+     */
 {
+    //Remember to call localhost5561:/api/tod
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        //for your eyes only
         private readonly ToDoDbContext _context;
 
+        //setting the database up
         public ValuesController(ToDoDbContext context)
         {
             _context = context;
@@ -28,6 +33,7 @@ namespace TodoAPI.Controllers
             return Ok(_context.Todos);
         }
 
+        //if the id in the database then get a todo item
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetTodo(int id)
         {
@@ -42,16 +48,16 @@ namespace TodoAPI.Controllers
             }
         }
 
+        //putting on our items
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Todo todo)
         {
+            // if the model is bad then return bad calls
             if (todo is null || !ModelState.IsValid)
             {
                 return BadRequest("Nope");
             }
-
-
-
+            // if found of to do and the id has something
             if (todo.ListId.HasValue &&
                 !(await _context.Todos.AnyAsync(l => l.Id == todo.ListId)))
             {
@@ -59,11 +65,11 @@ namespace TodoAPI.Controllers
 
             }
 
-
             await _context.Todos.AddAsync(todo);
 
             try
             {
+                //adding items to the saving of the changes
                 await _context.SaveChangesAsync();
             }
             catch
@@ -83,7 +89,7 @@ namespace TodoAPI.Controllers
             {
                 return BadRequest("Nope");
             }
-
+            //
             if (todo.ListId.HasValue && !(await _context.TodoLists.AnyAsync(l => l.Id == todo.Id)))
             {
                 return BadRequest("Nope");
