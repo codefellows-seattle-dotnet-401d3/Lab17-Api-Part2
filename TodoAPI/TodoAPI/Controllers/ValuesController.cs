@@ -8,9 +8,6 @@ using TodoAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
-
-
-
 namespace TodoAPI.Controllers
 {
     [Produces("application/json")]
@@ -36,7 +33,7 @@ namespace TodoAPI.Controllers
         {
             try
             {
-                return Ok(await _context.TodoLists.Include(t => t.List)
+                return Ok(await _context.Todos.Include(t => t.List)
                                              .FirstAsync(t => t.Id == id));
             }
             catch
@@ -62,8 +59,8 @@ namespace TodoAPI.Controllers
 
             }
 
-        
-            await _context.Todo.AddAsync(todo);
+
+            await _context.Todos.AddAsync(todo);
 
             try
             {
@@ -78,12 +75,7 @@ namespace TodoAPI.Controllers
         }
 
 
-        /// <summary>
-        /// /////////////
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-
+        // Placing the method 
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Put(int id, [FromBody] Todo todo)
         {
@@ -107,35 +99,57 @@ namespace TodoAPI.Controllers
             {
                 return NotFound();
             }
+            /*
+            existingToDo.Message = toDo.Message;
+            existingToDo.IsDone = toDo.IsDone;
+            existingToDo.ListId = toDo.ListId;
+            */
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+
+                return BadRequest("nope");
+            }
+            return NoContent();
         }
 
-
-
-
- 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            return "value";
+            Todo existingToDo;
+
+            try
+            {
+                existingToDo = await _context.Todos.FirstAsync(t => t.Id == id);
+            }
+            catch
+            {
+                // TODO: Insert logging here
+                return NotFound();
+            }
+
+            _context.Todos.Remove(existingToDo);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                // TODO: Insert logging here
+                return BadRequest("nope");
+            }
+
+            return NoContent();
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+
+
+
     }
 }
