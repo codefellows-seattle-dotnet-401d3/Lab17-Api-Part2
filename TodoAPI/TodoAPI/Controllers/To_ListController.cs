@@ -13,7 +13,7 @@ namespace TodoAPI.Controllers
     [Produces("application/json")]
     [Route("api/Todo")]
 
-    public class To_ListController : ControllerBase
+    public class To_ListController : Controller
     {
         private readonly ToDoDbContext _context;
 
@@ -33,8 +33,8 @@ namespace TodoAPI.Controllers
         {
             try
             {
-                ToDoList list = await _context.ToDoList.FirstAsync(l => l.Id == id);
-                IEnumerable<ToDo> items = await _context.ToDo.Where(i => i.ListId == id)
+                TodoList list = await _context.TodoLists.FirstAsync(l => l.Id == id);
+                IEnumerable<Todo> items = await _context.Todos.Where(i => i.ListId == id)
                                                              .ToListAsync();
 
                 // Return an object with the requested list along with its ToDo items
@@ -46,16 +46,18 @@ namespace TodoAPI.Controllers
                 return NotFound();
             }
         }
-
+       
+        // 
+       
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ToDoList list)
+        public async Task<IActionResult> Post([FromBody] TodoList list)
         {
             if (list is null || !ModelState.IsValid)
             {
                 return BadRequest("Empty or invalid ToDoList body provided");
             }
 
-            await _context.ToDoList.AddAsync(list);
+            await _context.TodoLists.AddAsync(list);
 
             try
             {
