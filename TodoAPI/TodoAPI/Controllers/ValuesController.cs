@@ -89,7 +89,7 @@ namespace TodoAPI.Controllers
             {
                 return BadRequest("Nope");
             }
-            //
+            // Adding items to the lambda expressions
             if (todo.ListId.HasValue && !(await _context.TodoLists.AnyAsync(l => l.Id == todo.Id)))
             {
                 return BadRequest("Nope");
@@ -99,17 +99,14 @@ namespace TodoAPI.Controllers
 
             try
             {
+              
                 ExitStrategy = await _context.Todos.FirstAsync(t => t.Id == id);
             }
             catch
             {
                 return NotFound();
             }
-            /*
-            existingToDo.Message = toDo.Message;
-            existingToDo.IsDone = toDo.IsDone;
-            existingToDo.ListId = toDo.ListId;
-            */
+         
             try
             {
                 await _context.SaveChangesAsync();
@@ -133,7 +130,7 @@ namespace TodoAPI.Controllers
             }
             catch
             {
-                // TODO: Insert logging here
+               
                 return NotFound();
             }
 
@@ -145,7 +142,7 @@ namespace TodoAPI.Controllers
             }
             catch
             {
-                // TODO: Insert logging here
+             
                 return BadRequest("nope");
             }
 
