@@ -25,7 +25,7 @@ These are just primarly endpoints need postman to perform the end action in orde
 
 ## Example
 
-![alt text](http://url/to/img.png)
+![alt text](/TodoAPI/)
 
 
 
