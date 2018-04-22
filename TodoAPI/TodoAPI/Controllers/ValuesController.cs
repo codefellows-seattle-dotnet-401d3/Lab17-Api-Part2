@@ -119,13 +119,16 @@ namespace TodoAPI.Controllers
             return NoContent();
         }
 
+        // Looks for an integer for Id example of toDo Value
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
+
             Todo existingToDo;
 
             try
             {
+                //linq query to see where it exists
                 existingToDo = await _context.Todos.FirstAsync(t => t.Id == id);
             }
             catch
@@ -134,6 +137,7 @@ namespace TodoAPI.Controllers
                 return NotFound();
             }
 
+            //.Remove function performed on Exisiting todo function
             _context.Todos.Remove(existingToDo);
 
             try
@@ -148,11 +152,5 @@ namespace TodoAPI.Controllers
 
             return NoContent();
         }
-
-
-
-
-
-
     }
 }
