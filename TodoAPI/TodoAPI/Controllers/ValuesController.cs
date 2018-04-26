@@ -27,7 +27,7 @@ namespace TodoAPI.Controllers
         }
 
         // GET api/values
-        [HttpGet]
+        [HttpGet] // ->>>>> READ METHOD
         public IActionResult GetAll()
         {
             return Ok(_context.Todos);
@@ -49,7 +49,7 @@ namespace TodoAPI.Controllers
         }
 
         //putting on our items
-        [HttpPost]
+        [HttpPost]//->>>>>>>Read Method
         public async Task<IActionResult> Post([FromBody] Todo todo)
         {
             // if the model is bad then return bad calls
@@ -120,7 +120,7 @@ namespace TodoAPI.Controllers
         }
 
         // Looks for an integer for Id example of toDo Value
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id:int}")] //->>>>>>>>>>>>>DELETE METHOD
         public async Task<IActionResult> Delete(int id)
         {
 

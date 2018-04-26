@@ -15,7 +15,7 @@ namespace TodoAPI.Controllers
 {
     // Remeber to call localhost:5561/api/todo
     [Produces("application/json")]
-    [Route("api/Todo")]
+    [Route("api/TodoList")]
 
     public class To_ListController : Controller
     {
@@ -29,14 +29,14 @@ namespace TodoAPI.Controllers
         }
 
         //Finds all data items
-        [HttpGet]
+        [HttpGet]// -->> READ METHOD
         public IActionResult Getall()
         {
             return Ok(_context.TodoLists);
         }
 
         //passing in a parameter of id 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}")] // -->>>READ METHOD
         public async Task<IActionResult> GetToDoList(int id)
         {
             try
@@ -58,7 +58,7 @@ namespace TodoAPI.Controllers
        
         // Post action from the ID place only in body the list of items with
    
-        [HttpPost]
+        [HttpPost] // ->>> UPDATE METHOD
         public async Task<IActionResult> Post([FromBody] TodoList list)
         {
             // if list is empty returns empty list 
@@ -84,6 +84,72 @@ namespace TodoAPI.Controllers
 
             //find the new list items
             return CreatedAtAction("GetToDoList", new { list.Id }, list);
+        }
+
+        [HttpPut("{id:int}")] //->>>> CREATE METHOD
+        public async Task<IActionResult> Put(int id, [FromBody] TodoList list)
+        {
+            if (list is null || id != list.Id || !ModelState.IsValid)
+            {
+                return BadRequest("Nope Not Found ");
+            }
+
+            TodoList existingList;
+
+            try
+            {
+                existingList = await _context.TodoLists.FirstAsync(l => l.Id == id);
+            }
+            catch
+            {
+                return BadRequest("Nope");
+            }
+
+            existingList.Name = list.Name;
+            _context.TodoLists.Update(existingList);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                return BadRequest("Nope");
+            }
+
+            //after all the changes are done make sure the return is complete.
+            return NoContent();
+
+        }
+
+
+        [HttpDelete("{id:int}")] //--> Delete Method
+        public async Task<IActionResult> Delete(int id)
+        {
+            TodoList existingTodDo;
+
+            try
+            {
+                existingTodDo = await _context.TodoLists.FirstAsync(f => f.Id == id);
+            }
+            catch
+            {
+                return NotFound();
+            }
+
+            _context.TodoLists.Remove(existingTodDo);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                return BadRequest("nope");
+            }
+
+            return NoContent();
+
+
         }
 
 
