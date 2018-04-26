@@ -123,6 +123,7 @@ namespace TodoAPI.Controllers
         }
 
 
+        // Remember to enter in ID url, example; http://localhost:58780/api/values/1/ in order to delete id of #1
         [HttpDelete("{id:int}")] //--> Delete Method
         public async Task<IActionResult> Delete(int id)
         {
@@ -147,7 +148,7 @@ namespace TodoAPI.Controllers
                 return BadRequest("nope");
             }
 
-            return NoContent();
+            return Ok(_context.TodoLists);
 
 
         }

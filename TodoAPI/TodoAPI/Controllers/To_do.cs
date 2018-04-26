@@ -9,15 +9,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace TodoAPI.Controllers
+    
     /* Use postman to test routes with Get and Put Methods
+     * 
+     * 
      */
 {
-    //Remember to call localhost5561:/api/tod
+    //Remember to call localhost5561:/api/todo
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        //for your eyes only
+        //Setting up the database context 
         private readonly ToDoDbContext _context;
 
         //setting the database up
@@ -34,9 +37,13 @@ namespace TodoAPI.Controllers
         }
 
         //if the id in the database then get a todo item
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}")] // ->>> READ Method
         public async Task<IActionResult> GetTodo(int id)
         {
+            /* async
+             * 
+             */
+
             try
             {
                 return Ok(await _context.Todos.Include(t => t.List)
@@ -49,7 +56,7 @@ namespace TodoAPI.Controllers
         }
 
         //putting on our items
-        [HttpPost]//->>>>>>>Read Method
+        [HttpPost]//->>>>>>>UPDATE Method
         public async Task<IActionResult> Post([FromBody] Todo todo)
         {
             // if the model is bad then return bad calls
@@ -82,7 +89,7 @@ namespace TodoAPI.Controllers
 
 
         // Placing the method 
-        [HttpPut("{id:int}")]
+        [HttpPut("{id:int}")] // ->>>> CREATE METHOD
         public async Task<IActionResult> Put(int id, [FromBody] Todo todo)
         {
             if (todo is null || id != todo.Id || !ModelState.IsValid)
@@ -119,11 +126,24 @@ namespace TodoAPI.Controllers
             return NoContent();
         }
 
-        // Looks for an integer for Id example of toDo Value
-        [HttpDelete("{id:int}")] //->>>>>>>>>>>>>DELETE METHOD
-        public async Task<IActionResult> Delete(int id)
+        // Looks for an integer for Id example of toDo Value ("{id:int}")
+
+        // Remember to enter in ID url, example; http://localhost:58780/api/values/1/ in order to delete id of #1
+        [HttpDelete ("{id:int}")] //- >>DELETE METHOD
+        public async Task<IActionResult> Delete (int id , Todo todo)
         {
 
+            var result = _context.Todos.FirstOrDefault(t => t.Id == id);
+            if (result != null)
+            {
+                _context.Remove(result);
+                await _context.SaveChangesAsync();
+                return Ok(result);
+            }
+            return BadRequest(id);
+
+
+            /*
             Todo existingToDo;
 
             try
@@ -133,7 +153,6 @@ namespace TodoAPI.Controllers
             }
             catch
             {
-               
                 return NotFound();
             }
 
@@ -151,6 +170,7 @@ namespace TodoAPI.Controllers
             }
 
             return NoContent();
+            */
         }
     }
 }
