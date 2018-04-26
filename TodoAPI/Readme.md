@@ -25,7 +25,7 @@ These are just primarly endpoints need postman to perform the end action in orde
 
 ## Example
 
-![alt text](http://url/to/img.png)
+![alt text](PostmanExample.JPG)
 
 
 
@@ -45,8 +45,7 @@ Microsoft Docs
 ## License
 MIT License
 
-/* Code modified from function sortTableArray obtained from  */
 
 ## Change Log
 
-01-01-2001 4:59pm - Added functionality to add and delete some things. -->
+04-22-2018 4:59pm -
