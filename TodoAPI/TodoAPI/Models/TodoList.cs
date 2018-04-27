@@ -7,8 +7,12 @@ namespace TodoAPI.Models
 {
     public class TodoList
     {
+        /*  TodoList {
+         *  Id:
+         *  Name:
+         */
 
-        //adding the Id to the name
+
         public int Id {get;set;}
 
         public string Name { get; set; }

@@ -17,7 +17,7 @@ namespace TodoAPI.Controllers
 {
     //Remember to call localhost5561:/api/todo
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/ToDo")]
     public class ValuesController : Controller
     {
         //Setting up the database context 
@@ -40,8 +40,8 @@ namespace TodoAPI.Controllers
         [HttpGet("{id:int}")] // ->>> READ Method
         public async Task<IActionResult> GetTodo(int id)
         {
-            /* async
-             * 
+            /*   Async method, for finding to Do by ID 
+             *  
              */
 
             try
@@ -91,16 +91,28 @@ namespace TodoAPI.Controllers
         // Placing the method 
         [HttpPut("{id:int}")] // ->>>> CREATE METHOD
         public async Task<IActionResult> Put(int id, [FromBody] Todo todo)
+
+            /* Async method to add using the request body,
+             * 
+             */
+
         {
             if (todo is null || id != todo.Id || !ModelState.IsValid)
             {
                 return BadRequest("Nope");
             }
-            // Adding items to the lambda expressions
+
+            /* 
+             * If another Id has been made with the same return bad response
+             */
+
             if (todo.ListId.HasValue && !(await _context.TodoLists.AnyAsync(l => l.Id == todo.Id)))
             {
                 return BadRequest("Nope");
             }
+
+            /*
+             */
 
             Todo ExitStrategy;
 
@@ -132,6 +144,9 @@ namespace TodoAPI.Controllers
         [HttpDelete ("{id:int}")] //- >>DELETE METHOD
         public async Task<IActionResult> Delete (int id , Todo todo)
         {
+            /* Method for finding the and deleting to do by ID, as long as the Id is not null.
+             *
+             */
 
             var result = _context.Todos.FirstOrDefault(t => t.Id == id);
             if (result != null)

@@ -15,7 +15,10 @@ namespace TodoAPI.Data
 
         }
 
-        //setting the to do list
+        /* ToDo Database table w/
+         * To_dos | to_Do_Lists
+         */
+
         public DbSet<Todo> Todos { get; set; }
         public DbSet<TodoList> TodoLists { get; set; }
 

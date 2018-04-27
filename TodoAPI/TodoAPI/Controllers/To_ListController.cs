@@ -86,6 +86,9 @@ namespace TodoAPI.Controllers
             return CreatedAtAction("GetToDoList", new { list.Id }, list);
         }
 
+        /*  Async method, adding  new To_list if
+         */
+
         [HttpPut("{id:int}")] //->>>> CREATE METHOD
         public async Task<IActionResult> Put(int id, [FromBody] TodoList list)
         {
@@ -93,6 +96,11 @@ namespace TodoAPI.Controllers
             {
                 return BadRequest("Nope Not Found ");
             }
+
+
+            /* If API.Models has a duplicate list with current List.ID
+             * returns bad request
+             */
 
             TodoList existingList;
 
@@ -104,6 +112,10 @@ namespace TodoAPI.Controllers
             {
                 return BadRequest("Nope");
             }
+
+
+            /* Adds parameter of ToDoList with items of list.name to current database of _context 
+             */
 
             existingList.Name = list.Name;
             _context.TodoLists.Update(existingList);
