@@ -9,7 +9,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TodoAPI.Controllers
-    /* Use Post man to test routes with GET PUT Methods 
+    /* Use Post man to test routes with GET PUT Methods
+     * 
+     * Make sure you are using POST -> to add
+     * 
      */
 
 {

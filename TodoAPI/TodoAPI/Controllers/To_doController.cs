@@ -18,13 +18,13 @@ namespace TodoAPI.Controllers
     //Remember to call localhost5561:/api/todo
     [Produces("application/json")]
     [Route("api/ToDo")]
-    public class ValuesController : Controller
+    public class To_doController : Controller
     {
         //Setting up the database context 
         private readonly ToDoDbContext _context;
 
         //setting the database up
-        public ValuesController(ToDoDbContext context)
+        public To_doController(ToDoDbContext context)
         {
             _context = context;
         }
