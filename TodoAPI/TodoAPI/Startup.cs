@@ -31,7 +31,7 @@ namespace TodoAPI
 
 
             services.AddDbContext<ToDoDbContext>(options => options.UseSqlServer(
-                Configuration.GetConnectionString("DefaultConnection")));
+                Configuration.GetConnectionString("Production")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,13 +42,23 @@ namespace TodoAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            //app.UseMvc();
 
+            app.UseStaticFiles();
+            app.UseMvc(rb =>
+            {
+                rb.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "Home", action = "Index" });
+            });
+
+            /*
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("TO List");
                 });
-
+                */
         }
     }
 }

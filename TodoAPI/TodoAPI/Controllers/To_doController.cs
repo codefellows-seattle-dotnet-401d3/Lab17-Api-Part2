@@ -33,7 +33,7 @@ namespace TodoAPI.Controllers
         [HttpGet] // ->>>>> READ METHOD
         public IActionResult GetAll()
         {
-            return Ok(_context.Todos);
+            return View();
         }
 
         //if the id in the database then get a todo item
@@ -155,37 +155,9 @@ namespace TodoAPI.Controllers
                 await _context.SaveChangesAsync();
                 return Ok(result);
             }
+
             return BadRequest(id);
 
-
-            /*
-            Todo existingToDo;
-
-            try
-            {
-                //linq query to see where it exists
-                existingToDo = await _context.Todos.FirstAsync(t => t.Id == id);
-            }
-            catch
-            {
-                return NotFound();
-            }
-
-            //.Remove function performed on Exisiting todo function
-            _context.Todos.Remove(existingToDo);
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch
-            {
-             
-                return BadRequest("nope");
-            }
-
-            return NoContent();
-            */
         }
     }
 }

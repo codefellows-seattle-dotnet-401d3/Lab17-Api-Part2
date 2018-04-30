@@ -35,7 +35,7 @@ namespace TodoAPI.Controllers
         [HttpGet]// -->> READ METHOD
         public IActionResult Getall()
         {
-            return Ok(_context.TodoLists);
+            return View();
         }
 
         //passing in a parameter of id 
@@ -167,11 +167,5 @@ namespace TodoAPI.Controllers
 
 
         }
-
-
-
-
-
-
     }
 }
