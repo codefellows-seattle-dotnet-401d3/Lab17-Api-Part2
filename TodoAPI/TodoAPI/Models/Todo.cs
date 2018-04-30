@@ -7,6 +7,11 @@ namespace TodoAPI.Models
 {
     public class Todo
     {
+
+        /* Todo 
+         * 
+         */
+
         public int Id { get; set; }
 
         public string Message { get; set; }

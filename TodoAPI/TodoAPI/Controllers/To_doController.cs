@@ -9,34 +9,41 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace TodoAPI.Controllers
+    
     /* Use postman to test routes with Get and Put Methods
+     * 
+     * 
      */
 {
-    //Remember to call localhost5561:/api/tod
+    //Remember to call localhost5561:/api/todo
     [Produces("application/json")]
-    [Route("api/[controller]")]
-    public class ValuesController : Controller
+    [Route("api/ToDo")]
+    public class To_doController : Controller
     {
-        //for your eyes only
+        //Setting up the database context 
         private readonly ToDoDbContext _context;
 
         //setting the database up
-        public ValuesController(ToDoDbContext context)
+        public To_doController(ToDoDbContext context)
         {
             _context = context;
         }
 
         // GET api/values
-        [HttpGet]
+        [HttpGet] // ->>>>> READ METHOD
         public IActionResult GetAll()
         {
-            return Ok(_context.Todos);
+            return View();
         }
 
         //if the id in the database then get a todo item
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}")] // ->>> READ Method
         public async Task<IActionResult> GetTodo(int id)
         {
+            /*   Async method, for finding to Do by ID 
+             *  
+             */
+
             try
             {
                 return Ok(await _context.Todos.Include(t => t.List)
@@ -49,7 +56,7 @@ namespace TodoAPI.Controllers
         }
 
         //putting on our items
-        [HttpPost]
+        [HttpPost]//->>>>>>>UPDATE Method
         public async Task<IActionResult> Post([FromBody] Todo todo)
         {
             // if the model is bad then return bad calls
@@ -82,18 +89,30 @@ namespace TodoAPI.Controllers
 
 
         // Placing the method 
-        [HttpPut("{id:int}")]
+        [HttpPut("{id:int}")] // ->>>> CREATE METHOD
         public async Task<IActionResult> Put(int id, [FromBody] Todo todo)
+
+            /* Async method to add using the request body,
+             * 
+             */
+
         {
             if (todo is null || id != todo.Id || !ModelState.IsValid)
             {
                 return BadRequest("Nope");
             }
-            // Adding items to the lambda expressions
+
+            /* 
+             * If another Id has been made with the same return bad response
+             */
+
             if (todo.ListId.HasValue && !(await _context.TodoLists.AnyAsync(l => l.Id == todo.Id)))
             {
                 return BadRequest("Nope");
             }
+
+            /*
+             */
 
             Todo ExitStrategy;
 
@@ -119,38 +138,26 @@ namespace TodoAPI.Controllers
             return NoContent();
         }
 
-        // Looks for an integer for Id example of toDo Value
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        // Looks for an integer for Id example of toDo Value ("{id:int}")
+
+        // Remember to enter in ID url, example; http://localhost:58780/api/values/1/ in order to delete id of #1
+        [HttpDelete ("{id:int}")] //- >>DELETE METHOD
+        public async Task<IActionResult> Delete (int id , Todo todo)
         {
+            /* Method for finding the and deleting to do by ID, as long as the Id is not null.
+             *
+             */
 
-            Todo existingToDo;
-
-            try
+            var result = _context.Todos.FirstOrDefault(t => t.Id == id);
+            if (result != null)
             {
-                //linq query to see where it exists
-                existingToDo = await _context.Todos.FirstAsync(t => t.Id == id);
-            }
-            catch
-            {
-               
-                return NotFound();
-            }
-
-            //.Remove function performed on Exisiting todo function
-            _context.Todos.Remove(existingToDo);
-
-            try
-            {
+                _context.Remove(result);
                 await _context.SaveChangesAsync();
-            }
-            catch
-            {
-             
-                return BadRequest("nope");
+                return Ok(result);
             }
 
-            return NoContent();
+            return BadRequest(id);
+
         }
     }
 }
