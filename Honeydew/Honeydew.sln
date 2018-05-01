@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Honeydew", "Honeydew\Honeydew.csproj", "{7EB439C9-3007-4A9A-9A2B-85FF1938DDA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject1", "XUnitTestProject1\XUnitTestProject1.csproj", "{BC2378C0-8D30-4DE9-907D-263AFFE739C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7EB439C9-3007-4A9A-9A2B-85FF1938DDA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EB439C9-3007-4A9A-9A2B-85FF1938DDA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EB439C9-3007-4A9A-9A2B-85FF1938DDA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EB439C9-3007-4A9A-9A2B-85FF1938DDA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC2378C0-8D30-4DE9-907D-263AFFE739C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC2378C0-8D30-4DE9-907D-263AFFE739C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC2378C0-8D30-4DE9-907D-263AFFE739C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC2378C0-8D30-4DE9-907D-263AFFE739C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {865A1324-2ADF-4E15-AD87-BCD461D999EA}
+	EndGlobalSection
+EndGlobal

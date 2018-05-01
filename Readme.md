@@ -1,75 +1,72 @@
-![cf](http://i.imgur.com/7v5ASc8.png) Lab 17: API - Double Resources
-=====================================
+# Honeydew API
+This is a simple, locally hosted API. When running, it will allow the user to request Todo items or a Todo list. Currently, a todo item can only be associated in one todo list. There are a few prebuilt silly examples.
 
-## To Submit this Assignment
-- fork this repository
-- write all of your code in a directory named `lab-#`; + `<your name>` **e.g.** `lab17-amanda`
-- push to your repository
-- submit a pull request to this repository
-- submit a link to your PR in canvas
-
-## Directions
-
-Starting from an **empty MVC template**, Create an API that allows a user to Create individual ToDo tasks, and put them in a ToDoList. <br /><br/>
-
-Don't forget to enable MVC and setup your Dependency Injection and DbContext for your database. (to encourage muscle memory, please try and do as much as you can before referring to external resources)
+## Use
+To use this API, you will need to download the code and set up a local sql server. In visual studio 2017, with the sql server workload included, this is as simple as opening the nu-get package console and inputing:
+```
+Add-Migration Initial
+Update-Database
+```
+At this point, you should be able to check if the database exists using the sql server explorer. If it does, your API is now ready to run!
 
 
-### Application Components
-You application should contiain the following *at minimum*:
-1. 2 Controllers with CRUD endpoints (You may use an empty API controller template for this if you wish)
-1. 2 Models (ToDo and ToDoList)
-1. 2 database tables (one database table for each model)
+Run the code. A browser page will pop up with a default 404 not found. Because this API has no front end, that is the expected, successful result. Look in the URL at the top of that page. It should read something like ``` localhost:1234/ ``` Copy and paste that whole thing into the tool you are using to send requests to the API (tested with postman, but anything should work). At that endpoint, firing a get request, the response body should look like:
+```
+//request was get method at http://localhost:56645/api/todo/
+[
+    {
+        "name": "Survive",
+        "complete": false,
+        "id": 5,
+        "belongs": {
+            "id": 5,
+            "name": "I am a potato"
+        }
+    },
+    {
+        "name": "Feed the Dog",
+        "complete": true,
+        "id": 6,
+        "belongs": {
+            "id": 6,
+            "name": "Daily"
+        }
+    },
+    {
+        "name": "Know Thyself",
+        "complete": false,
+        "id": 7,
+        "belongs": {
+            "id": 6,
+            "name": "Daily"
+        }
+    }
+]
 
-We can make the assumption that a ToDo can **only be a part of one ToDoList**
+```
 
-The following actions must also be true:
+This is built based on the default data. It will change to match your own interactions with the API. If everything is set up, it should persist.
 
-1. when accessing the Get action on `\api\ToDo`, it should output all the individual ToDos
-1. when accessing the Get action on `\api\ToDo\{id}`, it should output the details of the individual tToDo AND the ToDoList it is a part of.
-1. when accessing the Get action on `\api\ToDoList`, it should output all the ToDoLists
-1. when accessing the Get action on `\api\ToDoList\{id}`, it should output the individual ToDo list AND the individual tasks associated with it
-1. If you choose to delete a ToDoList, it should delete the list AND all of the associated ToDos associated
+### endpoints:
+note: 2018-0412, Posts are returning "bad request" status codes but still posting successfully.
+#### Todo
+- GET ```todo``` gets all the Todo items
+- GET ```todo/{id}``` gets the Todo item associated with that id number
+- POST ```todo``` A valid Todo item with all fields complete (except id, which will be auto generated if not provided) must be included in the body of the request. Otherwise, your will get a bad request error. This will add a Todo. NOTE: the Todolist associated must already exist.
+- DELETE ```todo/{id}``` deletes the item with a matching id
+#### Todolist
+- GET ```todolist``` gets all the Todolist items
+- GET ```todolist/{id}``` gets the Todolist associated with that id number
+- POST ```todolist``` A valid Todolist item with all fields complete (except id, which will be auto generated if not provided) must be included in the body of the request. Otherwise, your will get a bad request error.
+- DELETE ```todolist/{id}``` deletes the item with a matching id. If a single todo item continues to reference the ID, it will throw an exception and break instead of deleting.
 
-Unit tests are required for this lab.
+## Architecture
+This uses:
+- .net core entity framework
+- .net core mvc
+- sql server
 
-## ReadMe
-A README is a module consumer's first -- and maybe only -- look into your creation. The consumer wants a module to fulfill their need, so you must explain exactly what need your module fills, and how effectively it does so.
-<br />
-Your job is to
+The data is stored in a database. It will be seeded upon first initialization.
 
-1. tell them what it is (with context)
-2. show them what it looks like in action
-3. show them how they use it
-4. tell them any other relevant details
-<br />
-
-This is ***your*** job. It's up to the module creator to prove that their work is a shining gem in the sea of slipshod modules. Since so many developers' eyes will find their way to your README before anything else, quality here is your public-facing measure of your work.
-
-<br /> <br /> Refer to the sample-README in the class repo for an example. 
-- [Reference](https://github.com/noffle/art-of-readme)
-
-## Rubric
-- 7pts: Program meets all requirements described in Lab directions
-
-	Points  | Reasoning | 
-	 ------------ | :-----------: | 
-	7       | Program runs as expected, no exceptions during execution |
-	5       | Program meets all of the  functionality requirements described above // Program runs/compiles, Program contains logic/process errors|
-	4       | Program meets most of the functionality requirements descibed above // Program runs/compiles, but throws exceptions during execution |
-	3       | Program missing most of the functionality requirements descibed above // Program runs/compiles |
-	2       | Missing tests // tests are not passing // not enough valid tests |
-	2       | Missing Readme Document // Readme Document does not meet standards |
-	0       | Program does not compile/run. Build Errors // Required naming conventions not met |
-	0       | No Submission |
-
-- 3pts: Code meets industry standards
-	- These points are only awardable if you score at minimum a 5/7 on above criteria
-
-	Points  | Reasoning | 
-	 ------------ | :-----------: | 
-	3       | Code meets Industry Standards // methods and variables namings are appropriate // Selective and iterative statements are used appropriately, Fundamentals are propertly executed // Clearly and cleanly commented |
-	2       | syntax for naming conventions are not correct (camelCasing and PascalCasing are used appropriately) // slight errors in use of fundamentals // Missing some comments |
-	1       | Inappropriate naming conventions, and/or inappropriate use of fundamentals // Code is not commented  |
-	0       | No Submission or incomplete submission |
-
+## version
+2018-04-12 v1.0 App works on my machine. Seeing if works elsewhere. Coming next: update.
